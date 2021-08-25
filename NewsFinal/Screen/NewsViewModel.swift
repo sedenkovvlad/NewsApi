@@ -74,6 +74,12 @@ class NewsViewModel: NewsViewModelProtocol{
     //MARK: - Download Image from URL and Cache
     func getImage(url: URL, completion: @escaping (UIImage?) -> Void){
         
+        let imageCache = NSCache<NSString, UIImage>()
+        
+        if let cachedImage = imageCache.object(forKey: url.absoluteString as NSString){
+            completion(cachedImage)
+        }
+        
         let request = URLRequest(url: url, cachePolicy: URLRequest.CachePolicy.returnCacheDataElseLoad, timeoutInterval: 10)
         let dataTask = URLSession.shared.dataTask(with: request) {[weak self] data, response, error in
             guard
@@ -84,6 +90,8 @@ class NewsViewModel: NewsViewModelProtocol{
                 let self = self else {return}
     
             guard let image = UIImage(data: data!) else {return}
+            imageCache.setObject(image, forKey: url.absoluteString as NSString)
+            
             DispatchQueue.main.async {
                 completion(image)
             }
