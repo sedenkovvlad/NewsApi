@@ -19,7 +19,7 @@ class WebViewController: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        guard let url = URL else {return}
+        guard let url = URL else { return }
         
         DispatchQueue.main.async {
             self.webView.load(URLRequest(url: url))

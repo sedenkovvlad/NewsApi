@@ -15,17 +15,18 @@ enum DownloadError: Error {
 
 //MARK: - Dowload News Manager
 class DownloadManager {
-    static let shared = DownloadManager()
     
-    private init() {}
+    private let host = "https://newsapi.org/v2/top-headlines?country=ru&apiKey=e8557278222c47fda6eea7a00e294681"
+        
+    init() {}
     
-    func fetchNews(from url: String, competion: @escaping (Result<[News], DownloadError>) -> Void){
+    func fetchNews(for category: Category, competion: @escaping (Result<[News], DownloadError>) -> Void){
         
-        guard let urlString = URL(string: url) else {return}
-        
+        guard let url = URL(string: host + "&category=\(category.rawValue)") else {return}
+        print(url)
         let session = URLSession.shared
         
-        let dataTask = session.dataTask(with: urlString) { data, _ , error in
+        let dataTask = session.dataTask(with: url) { data, _ , error in
             DispatchQueue.main.async {
                 guard error == nil else {
                     competion(.failure(.errorNotNil))

@@ -8,19 +8,18 @@
 import Foundation
 
 
-protocol StorageManagerProtocol {
+protocol StorageManager {
     func fetchNews() -> [News]
     func saveNews(_ news: [News])
 }
 
 
 //MARK: - CoreData Manager
-class StorageManager: StorageManagerProtocol {
+class StorageManagerImpl: StorageManager {
+    
     private let coreDataStack: CoreDataStackProtocol = CoreDataStack.shared
 
-    static let shared = StorageManager()
-
-    private init() {}
+    init() {}
 
     func fetchNews() -> [News] {
         coreDataStack.fetchData()

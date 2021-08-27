@@ -16,9 +16,8 @@ protocol ReachabilityManagerProtocol {
 
 //MARK: - Internet Connection Manager
 class ReachabilityManager: ReachabilityManagerProtocol {
-    static let shared = ReachabilityManager()
     
-    private init() { }
+    init() { }
     
     func isConnectedToNetwork() -> Bool {
         var zeroAddress = sockaddr_in()

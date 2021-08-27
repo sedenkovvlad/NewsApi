@@ -8,25 +8,30 @@
 import Foundation
 import UIKit
 
-class DataProvider {
-    static let shared = DataProvider()
+final class DataProvider {
 
-    private init(storageManager: StorageManagerProtocol = StorageManager.shared) {}
-
+    private let storageManager: StorageManager
+    private let downloadManager: DownloadManager
+    private let reachabilityManager: ReachabilityManager
     
-    private let storageManager = StorageManager.shared
-    private let downloadManager = DownloadManager.shared
-    private let reachabilityManager = ReachabilityManager.shared
-
+    init(
+        storageManager: StorageManager,
+        downloadManager: DownloadManager,
+        reachabilityManager: ReachabilityManager
+    ) {
+        self.storageManager = storageManager
+        self.downloadManager = downloadManager
+        self.reachabilityManager = reachabilityManager
+    }
     
-    func getNewsData(urlString: String, completion: @escaping (Result<[News], Error>) -> Void) {
+    func getNewsData(category: Category, completion: @escaping (Result<[News], Error>) -> Void) {
         guard reachabilityManager.isConnectedToNetwork() else {
             let cachedNews = storageManager.fetchNews()
             completion(.success(cachedNews))
             return
         }
 
-        downloadManager.fetchNews(from: urlString) { result in
+        downloadManager.fetchNews(for: category) { result in
             switch result {
             case .success(let fetchedNews):
                 completion(.success(fetchedNews))

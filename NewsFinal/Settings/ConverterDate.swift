@@ -8,10 +8,8 @@
 import Foundation
 import UIKit
 
-class ConverterDate{
-    
-    static let shared = ConverterDate()
-    
+class ConverterDate {
+  
     func formatDateString(from date: Date) -> String {
         let dateFormatter = DateFormatter()
         

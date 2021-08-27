@@ -9,10 +9,19 @@ import UIKit
 
 class NewsViewController: UIViewController {
     
-    var viewModel: NewsViewModelProtocol!
-    
-    
+    private var viewModel: NewsViewModel
     private var tableView = UITableView()
+    
+    init(viewModel: NewsViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -20,7 +29,7 @@ class NewsViewController: UIViewController {
         navigationItem.leftBarButtonItem = viewModel.categoryMenu(tableView: tableView)
         configureTableView()
         
-        viewModel.getNewsData(urlString: Category.general.api) { [weak self ]result in
+        viewModel.getNewsData(category: Category.general) { [weak self ]result in
             switch result {
             case .success:
                 self?.tableView.reloadData()
@@ -28,6 +37,7 @@ class NewsViewController: UIViewController {
                 print(#function, "failure")
             }
         }
+        
     }
     
     //MARK: - Configure

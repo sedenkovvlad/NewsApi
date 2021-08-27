@@ -61,7 +61,7 @@ class CoreDataStack: CoreDataStackProtocol{
     
     
     //MARK: - Private Function
-    private func converterData(news: [News]){
+    private func converterData(news: [News]) {
         context.perform {
             for oneNews in news{
                 let newsEntity = NewsEntity(context: self.context)

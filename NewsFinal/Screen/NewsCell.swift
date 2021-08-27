@@ -12,7 +12,13 @@ class NewsCell: UITableViewCell {
     var imageNews = UIImageView()
     var borderLine = UIView()
     var titleLabel = UILabel()
-    var dateLabel = UILabel()
+    lazy var dateLabel: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 0
+        label.adjustsFontSizeToFitWidth = true
+        label.textAlignment = .center
+        return label
+    }()
     
     static var identifier = "cell"
     
@@ -25,15 +31,13 @@ class NewsCell: UITableViewCell {
         
         configureImageNews()
         configureTitleLabel()
-        configureDateLabel()
+//        configureDateLabel()
         configureBorderLine()
         
         dateLabelConstraints()
         borderLineConstraints()
         imageViewConstraints()
         titleLableConstraints()
-        
-        
     }
     
     required init?(coder: NSCoder) {
@@ -51,11 +55,9 @@ class NewsCell: UITableViewCell {
         titleLabel.numberOfLines = 0
         titleLabel.adjustsFontSizeToFitWidth = true
     }
-    func configureDateLabel(){
-        dateLabel.numberOfLines = 0
-        dateLabel.adjustsFontSizeToFitWidth = true
-        dateLabel.textAlignment = .center
-    }
+//    func configureDateLabel(){
+//
+//    }
     
     func configureBorderLine(){
         borderLine.backgroundColor = .lightGray
@@ -95,4 +97,14 @@ class NewsCell: UITableViewCell {
         super.prepareForReuse()
         imageNews.image = nil
     }
+}
+
+extension NewsCell {
+    
+    private enum Constants {
+        
+        static let borderLineLeftInset: CGFloat = -30
+        
+    }
+    
 }

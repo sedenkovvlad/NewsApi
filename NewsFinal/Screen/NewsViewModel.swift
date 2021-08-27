@@ -8,26 +8,34 @@
 import Foundation
 import UIKit
 
-protocol NewsViewModelProtocol {
+protocol NewsViewModel {
+    var itemSelection: (() -> Void)? { get set }
     var news: [News] { get }
-    func getNewsData(urlString: String, completion: @escaping (Result<Void, Error>) -> Void)
+    func getNewsData(category: Category, completion: @escaping (Result<Void, Error>) -> Void)
     func getDate(for itemIndex: Int) -> String
     func categoryMenu(tableView: UITableView) -> UIBarButtonItem
     func getImage(url: URL, completion: @escaping (UIImage?) -> Void)
 }
 
 
-class NewsViewModel: NewsViewModelProtocol{
-    private let dataProvider = DataProvider.shared
-    private let converterDate = ConverterDate.shared
+final class NewsViewModelImpl: NewsViewModel {
+    
+    private let dataProvider: DataProvider
+    private let converterDate: ConverterDate
+    private let imageCache = NSCache<NSString, UIImage>()
+    
+    var itemSelection: (() -> Void)?
     
     private(set) var news: [News] = []
     
-    
+    init(dataProvider: DataProvider, converterDate: ConverterDate) {
+        self.dataProvider = dataProvider
+        self.converterDate = converterDate
+    }
     
     //MARK: - Get News
-    func getNewsData(urlString: String, completion: @escaping (Result<Void, Error>) -> Void) {
-        dataProvider.getNewsData(urlString: urlString) { [weak self] result in
+    func getNewsData(category: Category, completion: @escaping (Result<Void, Error>) -> Void) {
+        dataProvider.getNewsData(category: category) { [weak self] result in
             guard let self = self else { return }
 
             switch result {
@@ -52,10 +60,10 @@ class NewsViewModel: NewsViewModelProtocol{
     //MARK: - Cetegory Menu
     func categoryMenu(tableView: UITableView) -> UIBarButtonItem{
         var categoryAction: UIMenu{
-            let menuAction = Category.allCases.map { (item) -> UIAction in
+            let menuAction = Category.allCases.map { item -> UIAction in
                 let name = item.rawValue
                 return UIAction(title: name.capitalized, image: UIImage(systemName: item.systemImage)) { [weak self](_) in
-                    self?.getNewsData(urlString: item.api) { result in
+                    self?.getNewsData(category: item) { result in
                         switch result {
                         case .success:
                             tableView.reloadData()
@@ -63,6 +71,7 @@ class NewsViewModel: NewsViewModelProtocol{
                             print(#function, "failure")
                         }
                     }
+                    self?.itemSelection?()
                 }
             }
             return UIMenu(title: "Change Category", children: menuAction)
@@ -74,28 +83,24 @@ class NewsViewModel: NewsViewModelProtocol{
     //MARK: - Download Image from URL and Cache
     func getImage(url: URL, completion: @escaping (UIImage?) -> Void){
         
-        let imageCache = NSCache<NSString, UIImage>()
-        
         if let cachedImage = imageCache.object(forKey: url.absoluteString as NSString){
             completion(cachedImage)
+            return
         }
         
-        let request = URLRequest(url: url, cachePolicy: URLRequest.CachePolicy.returnCacheDataElseLoad, timeoutInterval: 10)
-        let dataTask = URLSession.shared.dataTask(with: request) {[weak self] data, response, error in
+        let request = URLRequest(url: url, cachePolicy: .returnCacheDataElseLoad, timeoutInterval: 10)
+        URLSession.shared.dataTask(with: request) { [weak self] data, _, error in
             guard
                 error == nil,
-                data != nil,
-                let response = response as? HTTPURLResponse,
-                response.statusCode == 200,
-                let self = self else {return}
+                let data = data,
+                let image = UIImage(data: data)
+            else { return }
     
-            guard let image = UIImage(data: data!) else {return}
-            imageCache.setObject(image, forKey: url.absoluteString as NSString)
+            self?.imageCache.setObject(image, forKey: url.absoluteString as NSString)
             
             DispatchQueue.main.async {
                 completion(image)
             }
-        }
-        dataTask.resume()
+        }.resume()
     }
 }
