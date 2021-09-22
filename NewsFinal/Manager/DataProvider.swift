@@ -31,11 +31,11 @@ final class DataProvider {
             return
         }
 
-        downloadManager.fetchNews(for: category) { result in
+        downloadManager.fetchNews(for: category) { [weak self] result in
             switch result {
             case .success(let fetchedNews):
                 completion(.success(fetchedNews))
-                self.storageManager.saveNews(fetchedNews)
+                self?.storageManager.saveNews(fetchedNews)
 
             case .failure(let err):
                 completion(.failure(err))

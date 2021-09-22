@@ -7,6 +7,7 @@
 
 import UIKit
 import CoreData
+import Firebase
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -14,24 +15,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        let dataProvider = DataProvider(
-            storageManager: StorageManagerImpl(),
-            downloadManager: DownloadManager(),
-            reachabilityManager: ReachabilityManager()
-        )
-        let viewModel = NewsViewModelImpl(dataProvider: dataProvider, converterDate: ConverterDate())
-        let newsController = NewsViewController(viewModel: viewModel)
-        let webController = WebViewController()
-        let navController = UINavigationController(rootViewController: newsController)
-        navController.viewControllers = [webController, newsController]
-        navController.navigationBar.tintColor = .orange
         
-        window = UIWindow(frame: UIScreen.main.bounds)
-        window?.rootViewController = navController
-        window?.makeKeyAndVisible()
+        FirebaseApp.configure()
         
+      
+        let authNavController = UINavigationController(rootViewController: AuthViewController())
+        let mainController = MainViewController()
+        
+        Auth.auth().addStateDidChangeListener { [weak self] _, user in
+            if user == nil {
+                self?.rootController(controller: authNavController)
+            } else {
+                self?.rootController(controller: mainController)
+            }
+        }
         
         return true
+    }
+    
+    func rootController(controller: UIViewController){
+        window = UIWindow(frame: UIScreen.main.bounds)
+        window?.rootViewController = controller
+        window?.makeKeyAndVisible()
     }
 
 }

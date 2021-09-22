@@ -23,7 +23,6 @@ class DownloadManager {
     func fetchNews(for category: Category, competion: @escaping (Result<[News], DownloadError>) -> Void){
         
         guard let url = URL(string: host + "&category=\(category.rawValue)") else {return}
-        print(url)
         let session = URLSession.shared
         
         let dataTask = session.dataTask(with: url) { data, _ , error in

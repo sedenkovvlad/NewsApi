@@ -39,8 +39,8 @@ class CoreDataStack: CoreDataStackProtocol{
     //MARK: Save and Fetch function
     func saveData(news: [News]) {
         self.storeContainer.performBackgroundTask { [weak self] context in
-            self?.converterData(news: news)
             self?.deleteData(context: context)
+            self?.converterData(news: news)
         }
     }
     
