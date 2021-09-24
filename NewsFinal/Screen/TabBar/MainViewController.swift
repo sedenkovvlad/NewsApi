@@ -35,13 +35,13 @@ extension MainViewController{
 }
 
 extension MainViewController{
-    func createViewModel() -> NewsViewModelImpl{
+    func createViewModel() -> NewsViewModel{
         let dataProvider = DataProvider(
             storageManager: StorageManagerImpl(),
             downloadManager: DownloadManager(),
             reachabilityManager: ReachabilityManager()
         )
-        let viewModel = NewsViewModelImpl(dataProvider: dataProvider, converterDate: ConverterDate(), firebaseManager: FirebaseManager())
+        let viewModel = NewsViewModel(dataProvider: dataProvider, converterDate: ConverterDate(), firebaseManager: FirebaseManager())
         return viewModel
     }
 }

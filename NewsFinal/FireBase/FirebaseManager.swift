@@ -14,10 +14,10 @@ class FirebaseManager{
    
     init() {}
   
-    func addFavorite(news: News,indexPath: IndexPath, image: UIImageView?){
+    func addFavorite(news: News, image: UIImageView?){
         guard let userID = Auth.auth().currentUser?.uid else {return}
         let db = Firestore.firestore().collection("users").document(userID).collection("news").document(news.ID)
-        upload(news: news, indexPath: indexPath , currentUserID: userID, photo: image) { result in
+        upload(news: news,currentUserID: userID, photo: image) { result in
             switch result{
             case .success(let url):
                 db.setData([
@@ -51,7 +51,7 @@ class FirebaseManager{
             }
         }
     }
-    private func upload(news: News,indexPath: IndexPath,currentUserID: String, photo: UIImageView?, completion: @escaping (Result<URL, Error>) -> Void){
+    private func upload(news: News,currentUserID: String, photo: UIImageView?, completion: @escaping (Result<URL, Error>) -> Void){
         
         let ref = Storage.storage().reference().child("newsImage").child(news.ID)
         guard let imageData = photo?.image?.jpegData(compressionQuality: 0.4) else { return }

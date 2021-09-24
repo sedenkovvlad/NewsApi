@@ -139,7 +139,7 @@ class SignInViewController: UIViewController {
     
     
     @objc func enterNews(){
-        
+    
         guard let email = emailField.text?.trimmingCharacters(in: .whitespacesAndNewlines) else { return  }
         guard let password = passwordField.text?.trimmingCharacters(in: .whitespacesAndNewlines) else { return }
         
@@ -153,5 +153,4 @@ class SignInViewController: UIViewController {
         emailField.text = nil
         passwordField.text = nil
     }
-
 }

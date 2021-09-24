@@ -16,7 +16,7 @@ enum DownloadError: Error {
 //MARK: - Dowload News Manager
 class DownloadManager {
     
-    private let host = "https://newsapi.org/v2/top-headlines?country=ru&apiKey=e8557278222c47fda6eea7a00e294681"
+    private let host = "https://newsapi.org/v2/top-headlines?country=ru&apiKey=75325cb36fdb473abcb269dc04991c40"
         
     init() {}
     

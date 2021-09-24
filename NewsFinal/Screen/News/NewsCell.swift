@@ -59,7 +59,7 @@ class NewsCell: UITableViewCell {
         
     }
     
-    //MARK: - Configure
+    //MARK: - ConfigureConstraints
     
     func allConstraints(){
         imageViewConstraints()
@@ -124,6 +124,36 @@ class NewsCell: UITableViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         imageNews.image = nil
+    }
+    
+    //MARK: - Configure Cell
+    func configure(news: News, viewModel: NewsViewModelProtocol){
+        //title
+        titleLabel.text = news.title
+        //date
+        dateLabel.text = viewModel.getDate(date: news.publishedAt)
+        //image
+        if news.urlToImage != nil{
+            viewModel.getImage(url: news.urlToImage) { [weak self] image in
+                self?.imageNews.image = image
+            }
+        }else{
+            imageNews.image = UIImage(named: "noImage")
+        }
+        //button
+        favoriteButton.isSelected = news.isFavorite
+        bringSubviewToFront(favoriteButton)
+        buttonTapCallback = {[weak self] in
+            news.isFavorite.toggle()
+            if self?.favoriteButton.isSelected == false{
+                viewModel.addFavorite(news: news, image: self?.imageNews)
+                self?.favoriteButton.isSelected = true
+            }else{
+                viewModel.deleteFavorite(news: news)
+                self?.favoriteButton.isSelected = false
+            }
+        }
+        
     }
 }
 

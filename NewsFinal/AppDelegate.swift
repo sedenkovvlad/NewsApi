@@ -9,6 +9,8 @@ import UIKit
 import CoreData
 import Firebase
 
+
+
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -18,14 +20,13 @@ var window: UIWindow?
         
         FirebaseApp.configure()
         
-      
-        let authNavController = UINavigationController(rootViewController: AuthViewController())
-        let mainController = MainViewController()
         
         Auth.auth().addStateDidChangeListener { [weak self] _, user in
             if user == nil {
+                let authNavController = UINavigationController(rootViewController: AuthViewController())
                 self?.rootController(controller: authNavController)
             } else {
+                let mainController = MainViewController()
                 self?.rootController(controller: mainController)
             }
         }

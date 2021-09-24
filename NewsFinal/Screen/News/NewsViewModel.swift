@@ -13,17 +13,18 @@ protocol NewsViewModelProtocol {
     var itemSelection: (() -> Void)? { get set }
     var news: [News] { get }
     func getNewsData(category: Category, completion: @escaping (Result<Void, Error>) -> Void)
-    func getDate(for itemIndex: Int) -> String
+    func getDate(date: String?) -> String
     func categoryMenu(tableView: UITableView) -> UIBarButtonItem
-    func configureExitButton() -> UIBarButtonItem
     func getImage(url: URL?, completion: @escaping (UIImage?) -> Void)
-    func addFavorite(news: News, indexPath: IndexPath, image: UIImageView?)
+    func addFavorite(news: News, image: UIImageView?)
     func deleteFavorite(news: News)
 }
 
 
-final class NewsViewModel: NewsViewModelProtocol {
 
+
+final class NewsViewModel: NewsViewModelProtocol {
+   
     
     private let dataProvider: DataProvider
     private let converterDate: ConverterDate
@@ -56,11 +57,11 @@ final class NewsViewModel: NewsViewModelProtocol {
     }
     
     //MARK: - Converter Date
-    func getDate(for itemIndex: Int) -> String{
-        guard let publishedAt = news[itemIndex].publishedAt else {return ""}
-        guard let dateString = converterDate.formatDate(from: publishedAt) else {return ""}
-        let date = converterDate.formatDateString(from: dateString)
-        return date
+    func getDate(date: String?) -> String{
+        guard let date = date else {return ""}
+        guard let dateString = converterDate.formatDate(from: date) else { return "" }
+        let newsDate = converterDate.formatDateString(from: dateString)
+        return newsDate
     }
     
     //MARK: - Cetegory Menu
@@ -114,29 +115,10 @@ final class NewsViewModel: NewsViewModelProtocol {
 
 
 //MARK: - FireBase
-extension NewsViewModelImpl{
-    @objc func signOut(){
-        do{
-            try Auth.auth().signOut()
-            news.removeAll()
-        }catch let error as NSError{
-            print("Error signing out: \(error)")
-        }
-    }
+extension NewsViewModel{
     
-    func configureExitButton() -> UIBarButtonItem{
-        let button = UIButton()
-        button.setTitle("\u{2347}", for: .normal)
-        button.setTitleColor(.orange, for: .normal)
-        button.titleLabel?.font = button.titleLabel?.font.withSize(25)
-        button.addTarget(self, action: #selector(signOut), for: .touchUpInside)
-        let barItem = UIBarButtonItem(customView: button)
-        return barItem
-        
-    }
-    
-    func addFavorite(news: News, indexPath: IndexPath, image: UIImageView?){
-        firebaseManager.addFavorite(news: news, indexPath: indexPath, image: image)
+    func addFavorite(news: News, image: UIImageView?){
+        firebaseManager.addFavorite(news: news,image: image)
     }
     
     func deleteFavorite(news: News){
