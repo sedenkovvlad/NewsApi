@@ -10,6 +10,9 @@
 		911E8081D9CD636448006F0B /* Pods_NewsFinal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA3CBB2A6CD36443AFB6A63F /* Pods_NewsFinal.framework */; };
 		C217B26326FB7F61006B4FF1 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C217B26226FB7F61006B4FF1 /* MainViewController.swift */; };
 		C217B26526FB8E6A006B4FF1 /* FavoriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C217B26426FB8E6A006B4FF1 /* FavoriteViewController.swift */; };
+		C217B26A26FE261C006B4FF1 /* FavoriteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C217B26926FE261C006B4FF1 /* FavoriteCell.swift */; };
+		C217B26C26FE2E62006B4FF1 /* NewsFirebase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C217B26B26FE2E62006B4FF1 /* NewsFirebase.swift */; };
+		C217B26E26FF56BE006B4FF1 /* NewsFirebaseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C217B26D26FF56BE006B4FF1 /* NewsFirebaseViewModel.swift */; };
 		C273302B26F768610079773A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C273302A26F768610079773A /* GoogleService-Info.plist */; };
 		C273303126F76F440079773A /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = C273303026F76F440079773A /* Utilities.swift */; };
 		C273303526F771860079773A /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C273303426F771860079773A /* SignInViewController.swift */; };
@@ -41,6 +44,9 @@
 		BE00CB229CDE4E5C11B98B13 /* Pods-NewsFinal.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NewsFinal.debug.xcconfig"; path = "Target Support Files/Pods-NewsFinal/Pods-NewsFinal.debug.xcconfig"; sourceTree = "<group>"; };
 		C217B26226FB7F61006B4FF1 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		C217B26426FB8E6A006B4FF1 /* FavoriteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteViewController.swift; sourceTree = "<group>"; };
+		C217B26926FE261C006B4FF1 /* FavoriteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteCell.swift; sourceTree = "<group>"; };
+		C217B26B26FE2E62006B4FF1 /* NewsFirebase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsFirebase.swift; sourceTree = "<group>"; };
+		C217B26D26FF56BE006B4FF1 /* NewsFirebaseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsFirebaseViewModel.swift; sourceTree = "<group>"; };
 		C273302A26F768610079773A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C273303026F76F440079773A /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		C273303426F771860079773A /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
@@ -138,6 +144,8 @@
 			isa = PBXGroup;
 			children = (
 				C217B26426FB8E6A006B4FF1 /* FavoriteViewController.swift */,
+				C217B26D26FF56BE006B4FF1 /* NewsFirebaseViewModel.swift */,
+				C217B26926FE261C006B4FF1 /* FavoriteCell.swift */,
 			);
 			path = Favorite;
 			sourceTree = "<group>";
@@ -145,7 +153,6 @@
 		C273303C26F7C9610079773A /* FireBase */ = {
 			isa = PBXGroup;
 			children = (
-				C278647426F8AA49000782E8 /* FirebaseManager.swift */,
 				C273302A26F768610079773A /* GoogleService-Info.plist */,
 			);
 			path = FireBase;
@@ -163,6 +170,7 @@
 		C278647326F8AA15000782E8 /* NewsFireBase */ = {
 			isa = PBXGroup;
 			children = (
+				C217B26B26FE2E62006B4FF1 /* NewsFirebase.swift */,
 			);
 			path = NewsFireBase;
 			sourceTree = "<group>";
@@ -241,6 +249,7 @@
 				C2AAAE6226D4F6C900436850 /* DownloadManager.swift */,
 				C2AAAE6426D4F6F000436850 /* ReachabilityManager.swift */,
 				C2AAAE6726D4F73B00436850 /* StorageManagerImpl.swift */,
+				C278647426F8AA49000782E8 /* FirebaseManager.swift */,
 				C2AAAE6926D4F7CE00436850 /* DataProvider.swift */,
 			);
 			path = Manager;
@@ -375,7 +384,9 @@
 				C2AAAE5826D4F4F400436850 /* News.swift in Sources */,
 				C2AAAE4226D4F25700436850 /* NewsFinal.xcdatamodeld in Sources */,
 				C278647526F8AA49000782E8 /* FirebaseManager.swift in Sources */,
+				C217B26E26FF56BE006B4FF1 /* NewsFirebaseViewModel.swift in Sources */,
 				C2AAAE6826D4F73B00436850 /* StorageManagerImpl.swift in Sources */,
+				C217B26C26FE2E62006B4FF1 /* NewsFirebase.swift in Sources */,
 				C2AAAE6D26D4F85700436850 /* ConverterDate.swift in Sources */,
 				C2AAAE7726D500E000436850 /* NewsEntity+CoreDataProperties.swift in Sources */,
 				C2AAAE3826D4F25700436850 /* AppDelegate.swift in Sources */,
@@ -390,6 +401,7 @@
 				C2AAAE5326D4F38F00436850 /* NewsCell.swift in Sources */,
 				C2AAAE6A26D4F7CE00436850 /* DataProvider.swift in Sources */,
 				C2AAAE4F26D4F2CC00436850 /* NewsViewController.swift in Sources */,
+				C217B26A26FE261C006B4FF1 /* FavoriteCell.swift in Sources */,
 				C217B26526FB8E6A006B4FF1 /* FavoriteViewController.swift in Sources */,
 				C2AAAE7626D500E000436850 /* NewsEntity+CoreDataClass.swift in Sources */,
 			);

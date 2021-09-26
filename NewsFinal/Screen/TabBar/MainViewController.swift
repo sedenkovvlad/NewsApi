@@ -9,17 +9,19 @@ import UIKit
 
 class MainViewController: UITabBarController {
     
+    
+    //MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTapBar()
     }
     
     
-    func setupTapBar(){
-        let newsVC = createNavController(vc: NewsViewController(viewModel: createViewModel()), image: UIImage(systemName: "newspaper"))
-        newsVC.navigationBar.tintColor = .orange
+    private func setupTapBar(){
+        let newsVC = createNavController(vc: NewsViewController(viewModel: createNewsViewModel()), image: UIImage(systemName: "newspaper"))
         newsVC.tabBarItem.title = "News"
-        let favoriteVC = createNavController(vc: FavoriteViewController(), image: UIImage(systemName: "star"))
+        newsVC.navigationBar.tintColor = .orange
+        let favoriteVC = createNavController(vc: FavoriteViewController(viewModel: createFavoriteViewModel()), image: UIImage(systemName: "star"))
         favoriteVC.tabBarItem.title = "Favorite"
         viewControllers = [newsVC, favoriteVC]
     }
@@ -27,21 +29,26 @@ class MainViewController: UITabBarController {
 
 
 extension MainViewController{
-    func createNavController(vc: UIViewController, image: UIImage?) -> UINavigationController{
+    private func createNavController(vc: UIViewController, image: UIImage?) -> UINavigationController{
         let navController = UINavigationController(rootViewController: vc)
         navController.tabBarItem.image = image
         return navController
     }
 }
-
+//MARK: - Create ViewModels
 extension MainViewController{
-    func createViewModel() -> NewsViewModel{
+    private func createNewsViewModel() -> NewsViewModel{
         let dataProvider = DataProvider(
             storageManager: StorageManagerImpl(),
             downloadManager: DownloadManager(),
             reachabilityManager: ReachabilityManager()
         )
         let viewModel = NewsViewModel(dataProvider: dataProvider, converterDate: ConverterDate(), firebaseManager: FirebaseManager())
+        return viewModel
+    }
+    
+    private func createFavoriteViewModel() -> NewsFirebaseViewModel{
+    let viewModel = NewsFirebaseViewModel()
         return viewModel
     }
 }

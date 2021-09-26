@@ -23,6 +23,7 @@ class FirebaseManager{
                 db.setData([
                     "title": news.title ?? "Not title",
                     "description": news.description ?? "Not description",
+                    "webUrl": news.url?.absoluteString ?? "Not url",
                     "newsURL": url.absoluteString,
                     "uuidString": news.ID
                 ])
@@ -51,6 +52,27 @@ class FirebaseManager{
             }
         }
     }
+    
+    func deleteFavoriteFireBase(news: NewsFirebase){
+        guard let userID = Auth.auth().currentUser?.uid else {return}
+        let db = Firestore.firestore().collection("users").document(userID).collection("news").document(news.uuidString)
+        let storage = Storage.storage().reference().child("newsImage").child(news.uuidString)
+        db.delete() { error in
+            if let error = error {
+                print("Error removing document: \(error)")
+            }else{
+                print("Document successfully removed!")
+            }
+            storage.delete { error in
+                if let error = error{
+                    print("Error removing image: \(error)")
+                }else{
+                    print("Image successfully removed!")
+                }
+            }
+        }
+    }
+    
     private func upload(news: News,currentUserID: String, photo: UIImageView?, completion: @escaping (Result<URL, Error>) -> Void){
         
         let ref = Storage.storage().reference().child("newsImage").child(news.ID)

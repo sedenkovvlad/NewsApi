@@ -25,16 +25,15 @@ protocol NewsViewModelProtocol {
 
 final class NewsViewModel: NewsViewModelProtocol {
    
-    
     private let dataProvider: DataProvider
     private let converterDate: ConverterDate
     private let firebaseManager: FirebaseManager
     private let imageCache = NSCache<NSString, UIImage>()
-    
     var itemSelection: (() -> Void)?
-    
     private(set) var news: [News] = []
     
+    
+    //MARK: init
     init(dataProvider: DataProvider, converterDate: ConverterDate, firebaseManager: FirebaseManager) {
         self.dataProvider = dataProvider
         self.converterDate = converterDate
@@ -116,11 +115,9 @@ final class NewsViewModel: NewsViewModelProtocol {
 
 //MARK: - FireBase
 extension NewsViewModel{
-    
     func addFavorite(news: News, image: UIImageView?){
         firebaseManager.addFavorite(news: news,image: image)
     }
-    
     func deleteFavorite(news: News){
         firebaseManager.deleteFavorite(news: news)
     }

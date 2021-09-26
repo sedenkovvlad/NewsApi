@@ -20,6 +20,8 @@ var window: UIWindow?
         
         FirebaseApp.configure()
         
+    
+        
         
         Auth.auth().addStateDidChangeListener { [weak self] _, user in
             if user == nil {
@@ -27,6 +29,7 @@ var window: UIWindow?
                 self?.rootController(controller: authNavController)
             } else {
                 let mainController = MainViewController()
+                mainController.tabBar.tintColor = .orange
                 self?.rootController(controller: mainController)
             }
         }

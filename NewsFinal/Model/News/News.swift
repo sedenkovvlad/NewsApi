@@ -15,6 +15,7 @@ class News: Codable{
     var url: URL?
     var urlToImage: URL?
     var publishedAt: String?
+    
     var isFavorite: Bool = false
     var ID = UUID().uuidString
     

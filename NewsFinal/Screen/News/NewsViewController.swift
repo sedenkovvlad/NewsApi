@@ -11,17 +11,23 @@ import FirebaseAuth
 class NewsViewController: UIViewController {
     
     private var viewModel: NewsViewModelProtocol
-    private var tableView = UITableView()
+     var tableView = UITableView()
     
     
     init(viewModel: NewsViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
+    
+   
 
     @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    deinit {
+        print("NewsViewController deinit")
     }
     
     
@@ -46,10 +52,12 @@ class NewsViewController: UIViewController {
         navigationItem.leftBarButtonItem = configureExitButton()
         configureTableView()
     }
- 
     
     
-
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tableView.reloadData()
+    }
     
     //MARK: - Configure TableView
     func configureTableView(){

@@ -43,25 +43,25 @@ class NewsCell: UITableViewCell {
         return button
     }()
     
+    lazy var buttonTapCallback: () -> ()  = { }
+    
     static var identifier = "cell"
-    var buttonTapCallback: () -> ()  = { }
+    
     
     //MARK: - init
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
         allAddSubview()
         allConstraints()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-        
     }
     
     //MARK: - ConfigureConstraints
     
-    func allConstraints(){
+    private  func allConstraints(){
         imageViewConstraints()
         titleLableConstraints()
         dateLabelConstraints()
@@ -69,7 +69,7 @@ class NewsCell: UITableViewCell {
         favoriteButtonConstrains()
         
     }
-    func allAddSubview(){
+    private func allAddSubview(){
         addSubview(imageNews)
         addSubview(titleLabel)
         addSubview(dateLabel)
@@ -77,26 +77,26 @@ class NewsCell: UITableViewCell {
         addSubview(favoriteButton)
     }
     
-    func imageViewConstraints(){
+    private  func imageViewConstraints(){
         imageNews.translatesAutoresizingMaskIntoConstraints = false
         imageNews.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
         imageNews.trailingAnchor.constraint(equalTo: trailingAnchor,constant: -12).isActive = true
         imageNews.heightAnchor.constraint(equalToConstant: 120).isActive = true
         imageNews.widthAnchor.constraint(equalToConstant: 190).isActive = true
     }
-    func titleLableConstraints(){
+    private  func titleLableConstraints(){
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 10).isActive = true
         titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10).isActive = true
         titleLabel.trailingAnchor.constraint(equalTo: imageNews.leadingAnchor, constant: -20).isActive = true
         titleLabel.bottomAnchor.constraint(equalTo: borderLine.bottomAnchor, constant: -15).isActive = true
     }
-    func dateLabelConstraints(){
+    private func dateLabelConstraints(){
         dateLabel.translatesAutoresizingMaskIntoConstraints = false
         dateLabel.bottomAnchor.constraint(equalTo: bottomAnchor,constant: -10).isActive = true
         dateLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10).isActive = true
     }
-    func borderLineConstraints(){
+    private func borderLineConstraints(){
         borderLine.translatesAutoresizingMaskIntoConstraints = false
         borderLine.bottomAnchor.constraint(equalTo: dateLabel.bottomAnchor, constant: -30).isActive = true
         borderLine.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
@@ -104,7 +104,7 @@ class NewsCell: UITableViewCell {
         borderLine.heightAnchor.constraint(equalToConstant: 2).isActive = true
     }
     
-    func favoriteButtonConstrains(){
+    private func favoriteButtonConstrains(){
         favoriteButton.translatesAutoresizingMaskIntoConstraints = false
         favoriteButton.topAnchor.constraint(equalTo: imageNews.bottomAnchor, constant: 5).isActive = true
         favoriteButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -5).isActive = true
@@ -140,9 +140,11 @@ class NewsCell: UITableViewCell {
         }else{
             imageNews.image = UIImage(named: "noImage")
         }
+        
+        
         //button
-        favoriteButton.isSelected = news.isFavorite
         bringSubviewToFront(favoriteButton)
+        favoriteButton.isSelected = news.isFavorite
         buttonTapCallback = {[weak self] in
             news.isFavorite.toggle()
             if self?.favoriteButton.isSelected == false{
@@ -153,7 +155,6 @@ class NewsCell: UITableViewCell {
                 self?.favoriteButton.isSelected = false
             }
         }
-        
     }
 }
 
