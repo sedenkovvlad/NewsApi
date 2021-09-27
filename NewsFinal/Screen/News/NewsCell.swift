@@ -44,7 +44,6 @@ class NewsCell: UITableViewCell {
     }()
     
     lazy var buttonTapCallback: () -> ()  = { }
-    
     static var identifier = "cell"
     
     
@@ -54,13 +53,11 @@ class NewsCell: UITableViewCell {
         allAddSubview()
         allConstraints()
     }
-    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     //MARK: - ConfigureConstraints
-    
     private  func allConstraints(){
         imageViewConstraints()
         titleLableConstraints()
@@ -109,16 +106,13 @@ class NewsCell: UITableViewCell {
         favoriteButton.topAnchor.constraint(equalTo: imageNews.bottomAnchor, constant: 5).isActive = true
         favoriteButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -5).isActive = true
         favoriteButton.centerXAnchor.constraint(equalTo: imageNews.centerXAnchor).isActive = true
-        
         favoriteButton.addTarget(self, action: #selector(didTapButton), for: .touchUpInside)
     }
     
     //MARK: @objc
-    @objc func didTapButton(){
+    @objc private func didTapButton(){
         buttonTapCallback()
     }
-    
-    
     
     //MARK: - Ovveride Function
     override func prepareForReuse() {
@@ -141,13 +135,12 @@ class NewsCell: UITableViewCell {
             imageNews.image = UIImage(named: "noImage")
         }
         
-        
         //button
         bringSubviewToFront(favoriteButton)
         favoriteButton.isSelected = news.isFavorite
-        buttonTapCallback = {[weak self] in
+        buttonTapCallback = { [weak self] in
             news.isFavorite.toggle()
-            if self?.favoriteButton.isSelected == false{
+            if self?.favoriteButton.isSelected == false {
                 viewModel.addFavorite(news: news, image: self?.imageNews)
                 self?.favoriteButton.isSelected = true
             }else{

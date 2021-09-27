@@ -36,12 +36,10 @@ final class DataProvider {
             case .success(let fetchedNews):
                 completion(.success(fetchedNews))
                 self?.storageManager.saveNews(fetchedNews)
-
             case .failure(let err):
                 completion(.failure(err))
             }
         }
     }
-   
 }
 

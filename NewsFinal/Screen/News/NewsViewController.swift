@@ -19,24 +19,15 @@ class NewsViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
     }
     
-   
-
     @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    deinit {
-        print("NewsViewController deinit")
-    }
-    
-    
-    
-    
     //MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewModel.getNewsData(category: Category.general) { [weak self ]result in
+        viewModel.getNewsData(category: Category.general) { [weak self] result in
             switch result {
             case .success:
                 DispatchQueue.main.async {
@@ -45,19 +36,13 @@ class NewsViewController: UIViewController {
             case .failure:
                 print(#function, "failure")
             }
-            print("мы снова заработали")
         }
-        
         navigationItem.rightBarButtonItem = viewModel.categoryMenu(tableView: tableView)
         navigationItem.leftBarButtonItem = configureExitButton()
         configureTableView()
     }
     
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        tableView.reloadData()
-    }
+  
     
     //MARK: - Configure TableView
     func configureTableView(){
@@ -99,8 +84,9 @@ extension NewsViewController{
     @objc func signOut(){
         do{
             try Auth.auth().signOut()
+            viewModel.imageCache.removeAllObjects()
             let vc = AuthViewController()
-            guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {return}
+            guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
             appDelegate.window?.rootViewController = vc
             present(vc, animated: true, completion: nil)
         }catch let error as NSError{
@@ -117,7 +103,14 @@ extension NewsViewController{
         button.addTarget(self, action: #selector(signOut), for: .touchUpInside)
         let barItem = UIBarButtonItem(customView: button)
         return barItem
-        
+    }
+}
+
+extension NewsViewController: FavoriteViewControllerOutput{
+    func rowDeleted(with id: String) {
+        guard let index = viewModel.news.firstIndex (where: { $0.ID == id }) else  {return}
+        viewModel.news[index].isFavorite = false
+        tableView.reloadData()
     }
 }
 

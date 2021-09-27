@@ -16,7 +16,7 @@ class MainViewController: UITabBarController {
         setupTapBar()
     }
     
-    
+    //MARK: - Configure Tabbar
     private func setupTapBar(){
         let newsVC = createNavController(vc: NewsViewController(viewModel: createNewsViewModel()), image: UIImage(systemName: "newspaper"))
         newsVC.tabBarItem.title = "News"
@@ -46,7 +46,6 @@ extension MainViewController{
         let viewModel = NewsViewModel(dataProvider: dataProvider, converterDate: ConverterDate(), firebaseManager: FirebaseManager())
         return viewModel
     }
-    
     private func createFavoriteViewModel() -> NewsFirebaseViewModel{
     let viewModel = NewsFirebaseViewModel()
         return viewModel

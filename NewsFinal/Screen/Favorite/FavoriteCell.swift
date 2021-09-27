@@ -10,11 +10,10 @@ import Firebase
 
 class FavoriteCell: UICollectionViewCell {
     
-    
     lazy var imageView: UIImageView = {
         let image = UIImageView()
         image.clipsToBounds = true
-        image.contentMode = .scaleAspectFill
+        image.contentMode = .scaleAspectFit
         return image
         
     }()
@@ -41,11 +40,10 @@ class FavoriteCell: UICollectionViewCell {
     
     lazy var sharedButtonTapCallback: () -> ()  = { }
     lazy var deleteButtonTapCallback: () -> ()  = { }
-    
-        
-    
     static let identifier = "cell"
     
+    
+    //MARK: - init
     override init(frame: CGRect) {
         super.init(frame: frame)
         contentView.addSubview(titleLabel)

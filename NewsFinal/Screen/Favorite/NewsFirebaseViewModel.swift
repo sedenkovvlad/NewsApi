@@ -19,9 +19,8 @@ final class NewsFirebaseViewModel: NewsFirebaseViewModelProtocol{
     
     private(set) var news: [NewsFirebase] = []
     
-    
     func getNewsFirebase(collectionView: UICollectionView){
-        guard let userID = Auth.auth().currentUser?.uid else {return}
+        guard let userID = Auth.auth().currentUser?.uid else { return }
         let db = Firestore.firestore().collection("users").document(userID).collection("news")
         db.addSnapshotListener { [weak self] snapshot, error in
             guard let documents = snapshot?.documents else {

@@ -8,13 +8,20 @@
 import UIKit
 import Firebase
 
+protocol FavoriteViewControllerOutput: AnyObject {
+    func rowDeleted(with id: String)
+}
+
 class FavoriteViewController: UIViewController {
     
-    private let collectionView = UICollectionView(frame: .zero, collectionViewLayout: FavoriteCell.createLayout())
+    var output: FavoriteViewControllerOutput?
     
-    private let viewModel: NewsFirebaseViewModelProtocol
-    private let firebaseManager = FirebaseManager()
+    private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: FavoriteCell.createLayout())
+    private lazy var firebaseManager = FirebaseManager()
+    private let  viewModel: NewsFirebaseViewModelProtocol
     
+    
+    //MARK: - init
     init (viewModel: NewsFirebaseViewModel){
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -24,17 +31,12 @@ class FavoriteViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
-    
-    
     //MARK: LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
         configureCollectionView()
         viewModel.getNewsFirebase(collectionView: collectionView)
     }
-    
-    
     
     //MARK: - Configure
     func configureCollectionView(){
@@ -44,8 +46,6 @@ class FavoriteViewController: UIViewController {
         collectionView.frame = view.bounds
         collectionView.backgroundColor = .white
     }
-    
-    
 }
 
 //MARK: - CollectionView DataSource
@@ -55,7 +55,9 @@ extension FavoriteViewController: UICollectionViewDataSource{
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FavoriteCell.identifier, for: indexPath) as! FavoriteCell
+
+        
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FavoriteCell.identifier, for: indexPath) as! FavoriteCell 
         let news = viewModel.news[indexPath.item]
     
         cell.configureCell(newsFirebase: news)
@@ -66,6 +68,7 @@ extension FavoriteViewController: UICollectionViewDataSource{
         }
         cell.deleteButtonTapCallback = { [weak self] in
             self?.firebaseManager.deleteFavoriteFireBase(news: news)
+            self?.output?.rowDeleted(with: news.uuidString)
             DispatchQueue.main.async {
                 self?.collectionView.reloadData()
             }

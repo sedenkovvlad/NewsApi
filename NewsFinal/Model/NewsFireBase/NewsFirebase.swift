@@ -14,7 +14,6 @@ class NewsFirebase{
     var newsURL: String
     var uuidString: String
    
-    
     init(title: String, url: String,newsURL: String, uuidString: String) {
         self.title = title
         self.url = url

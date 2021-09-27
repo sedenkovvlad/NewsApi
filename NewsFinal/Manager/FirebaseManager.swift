@@ -15,7 +15,7 @@ class FirebaseManager{
     init() {}
   
     func addFavorite(news: News, image: UIImageView?){
-        guard let userID = Auth.auth().currentUser?.uid else {return}
+        guard let userID = Auth.auth().currentUser?.uid else { return }
         let db = Firestore.firestore().collection("users").document(userID).collection("news").document(news.ID)
         upload(news: news,currentUserID: userID, photo: image) { result in
             switch result{
@@ -34,7 +34,7 @@ class FirebaseManager{
     }
     
     func deleteFavorite(news: News){
-        guard let userID = Auth.auth().currentUser?.uid else {return}
+        guard let userID = Auth.auth().currentUser?.uid else { return }
         let db = Firestore.firestore().collection("users").document(userID).collection("news").document(news.ID)
         let storage = Storage.storage().reference().child("newsImage").child(news.ID)
         db.delete() { error in
@@ -54,7 +54,7 @@ class FirebaseManager{
     }
     
     func deleteFavoriteFireBase(news: NewsFirebase){
-        guard let userID = Auth.auth().currentUser?.uid else {return}
+        guard let userID = Auth.auth().currentUser?.uid else { return }
         let db = Firestore.firestore().collection("users").document(userID).collection("news").document(news.uuidString)
         let storage = Storage.storage().reference().child("newsImage").child(news.uuidString)
         db.delete() { error in

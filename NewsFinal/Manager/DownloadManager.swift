@@ -21,10 +21,8 @@ class DownloadManager {
     init() {}
     
     func fetchNews(for category: Category, competion: @escaping (Result<[News], DownloadError>) -> Void){
-        
         guard let url = URL(string: host + "&category=\(category.rawValue)") else {return}
         let session = URLSession.shared
-        
         let dataTask = session.dataTask(with: url) { data, _ , error in
             DispatchQueue.main.async {
                 guard error == nil else {
