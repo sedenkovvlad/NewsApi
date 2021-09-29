@@ -9,11 +9,11 @@ import UIKit
 import FirebaseAuth
 
 class NewsViewController: UIViewController {
-    
+
     private var viewModel: NewsViewModelProtocol
-     var tableView = UITableView()
+    private lazy var tableView = UITableView()
     
-    
+    //MARK: - init
     init(viewModel: NewsViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -27,32 +27,13 @@ class NewsViewController: UIViewController {
     //MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewModel.getNewsData(category: Category.general) { [weak self] result in
-            switch result {
-            case .success:
-                DispatchQueue.main.async {
-                    self?.tableView.reloadData()
-                }
-            case .failure:
-                print(#function, "failure")
-            }
-        }
-        navigationItem.rightBarButtonItem = viewModel.categoryMenu(tableView: tableView)
-        navigationItem.leftBarButtonItem = configureExitButton()
         configureTableView()
-    }
-    
-  
-    
-    //MARK: - Configure TableView
-    func configureTableView(){
-        view.addSubview(tableView)
-        tableView.register(NewsCell.self, forCellReuseIdentifier: NewsCell.identifier)
-        tableView.frame = view.bounds
-        tableView.delegate = self
-        tableView.dataSource = self
+        getNewsData(category: Category.general)
+        navigationItem.leftBarButtonItem = exitButton()
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: nil, image: UIImage(systemName: "scroll"), primaryAction: nil, menu: categoryMenu())
     }
 }
+
 
 
 
@@ -79,9 +60,27 @@ extension NewsViewController: UITableViewDelegate{
     }
 }
 
-//MARK: - Button signOut
+
+//MARK: - Networking
 extension NewsViewController{
-    @objc func signOut(){
+    private func getNewsData(category: Category){
+        viewModel.getNewsData(category: category) { [weak self] result in
+            switch result {
+            case .success:
+                DispatchQueue.main.async {
+                    self?.tableView.reloadData()
+                    self?.viewModel.imageCache.removeAllObjects()
+                }
+            case .failure:
+                print(#function, "failure")
+            }
+        }
+    }
+}
+
+//MARK: - FireBase
+extension NewsViewController{
+    @objc private func signOut(){
         do{
             try Auth.auth().signOut()
             viewModel.imageCache.removeAllObjects()
@@ -92,10 +91,26 @@ extension NewsViewController{
         }catch let error as NSError{
             print("Error signing out: \(error)")
         }
-        
+    }
+}
+
+
+//MARK: - UI
+extension NewsViewController{
+    private func categoryMenu() -> UIMenu{
+        var categoryMenu: UIMenu {
+            let menuAction = Category.allCases.map { [weak self] item -> UIAction in
+                let name = item.rawValue
+                return UIAction(title: name, image: UIImage(systemName: item.systemImage)) { [weak self] _ in
+                    self?.getNewsData(category: item)
+                }
+            }
+            return UIMenu(title: "Change Category", children: menuAction)
+        }
+        return categoryMenu
     }
     
-    func configureExitButton() -> UIBarButtonItem{
+    private func exitButton() -> UIBarButtonItem{
         let button = UIButton()
         button.setTitle("\u{2347}", for: .normal)
         button.setTitleColor(.orange, for: .normal)
@@ -103,6 +118,14 @@ extension NewsViewController{
         button.addTarget(self, action: #selector(signOut), for: .touchUpInside)
         let barItem = UIBarButtonItem(customView: button)
         return barItem
+    }
+    
+    private func configureTableView(){
+        view.addSubview(tableView)
+        tableView.register(NewsCell.self, forCellReuseIdentifier: NewsCell.identifier)
+        tableView.frame = view.bounds
+        tableView.delegate = self
+        tableView.dataSource = self
     }
 }
 
@@ -113,6 +136,8 @@ extension NewsViewController: FavoriteViewControllerOutput{
         tableView.reloadData()
     }
 }
+
+
 
 
 

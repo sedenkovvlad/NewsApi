@@ -214,11 +214,11 @@
 		C2AAAE5426D4F49600436850 /* Screen */ = {
 			isa = PBXGroup;
 			children = (
-				C217B26626FB8EB6006B4FF1 /* TabBar */,
+				C273302C26F768990079773A /* News */,
 				C273302F26F768EF0079773A /* Favorite */,
 				C273302E26F768E40079773A /* Auth */,
+				C217B26626FB8EB6006B4FF1 /* TabBar */,
 				C273302D26F768DD0079773A /* Web */,
-				C273302C26F768990079773A /* News */,
 			);
 			path = Screen;
 			sourceTree = "<group>";

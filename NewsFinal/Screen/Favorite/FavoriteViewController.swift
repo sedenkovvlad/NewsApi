@@ -14,22 +14,23 @@ protocol FavoriteViewControllerOutput: AnyObject {
 
 class FavoriteViewController: UIViewController {
     
-    var output: FavoriteViewControllerOutput?
+    weak var output: FavoriteViewControllerOutput?
     
     private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: FavoriteCell.createLayout())
     private lazy var firebaseManager = FirebaseManager()
     private let  viewModel: NewsFirebaseViewModelProtocol
-    
-    
+  
+   
     //MARK: - init
     init (viewModel: NewsFirebaseViewModel){
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
-    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    
     
     //MARK: LifeCycle
     override func viewDidLoad() {
