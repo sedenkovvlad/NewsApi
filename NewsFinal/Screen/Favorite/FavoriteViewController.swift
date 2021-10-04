@@ -20,6 +20,10 @@ class FavoriteViewController: UIViewController {
     private lazy var firebaseManager = FirebaseManager()
     private let  viewModel: NewsFirebaseViewModelProtocol
   
+    
+    deinit {
+        print("Favotite deinit")
+    }
    
     //MARK: - init
     init (viewModel: NewsFirebaseViewModel){
@@ -37,15 +41,6 @@ class FavoriteViewController: UIViewController {
         super.viewDidLoad()
         configureCollectionView()
         viewModel.getNewsFirebase(collectionView: collectionView)
-    }
-    
-    //MARK: - Configure
-    func configureCollectionView(){
-        view.addSubview(collectionView)
-        collectionView.register(FavoriteCell.self, forCellWithReuseIdentifier: FavoriteCell.identifier)
-        collectionView.dataSource = self
-        collectionView.frame = view.bounds
-        collectionView.backgroundColor = .white
     }
 }
 
@@ -75,6 +70,17 @@ extension FavoriteViewController: UICollectionViewDataSource{
             }
         }
         return cell
+    }
+}
+
+//MARK: UI
+extension FavoriteViewController {
+    func configureCollectionView(){
+        view.addSubview(collectionView)
+        collectionView.register(FavoriteCell.self, forCellWithReuseIdentifier: FavoriteCell.identifier)
+        collectionView.dataSource = self
+        collectionView.frame = view.bounds
+        collectionView.backgroundColor = .white
     }
 }
 

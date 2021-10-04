@@ -24,11 +24,16 @@ class NewsViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    
+    deinit {
+        print("News dinit")
+    }
+    
     //MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
         configureTableView()
-        getNewsData(category: Category.general)
+        getNewsData(category: .general)
         navigationItem.leftBarButtonItem = exitButton()
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: nil, image: UIImage(systemName: "scroll"), primaryAction: nil, menu: categoryMenu())
     }

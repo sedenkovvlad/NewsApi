@@ -16,6 +16,10 @@ class MainViewController: UITabBarController {
         setupTapBar()
     }
     
+    deinit {
+        print("Main deinit")
+    }
+    
     //MARK: - Configure Tabbar
     private func setupTapBar(){
         let newsVC = createNavController(vc: NewsViewController(viewModel: createNewsViewModel()), image: UIImage(systemName: "newspaper"))
