@@ -20,18 +20,18 @@ class DownloadManager {
         
     init() {}
     
-    func fetchNews(for category: Category, competion: @escaping (Result<[News], DownloadError>) -> Void) {
+    func fetchNews(for category: Category, completion: @escaping (Result<[News], DownloadError>) -> Void) {
         guard let url = URL(string: host + "&category=\(category.rawValue)") else { return }
         let session = URLSession.shared
         let dataTask = session.dataTask(with: url) { data, _ , error in
             DispatchQueue.main.async {
                 guard error == nil else {
-                    competion(.failure(.errorNotNil))
+                    completion(.failure(.errorNotNil))
                     return
                 }
                 guard let data = data else {
                     print("Data isEmpty")
-                    competion(.failure(.noData))
+                    completion(.failure(.noData))
                     return
                 }
                 
@@ -39,7 +39,7 @@ class DownloadManager {
                     let decoder = JSONDecoder()
                     let jsonData = try decoder.decode(Articles.self, from: data)
                     let news = jsonData.articles
-                    competion(.success(news))
+                    completion(.success(news))
                 } catch let error as NSError {
                     print("Could not fetch: \(error), \(error.userInfo)")
                 }
