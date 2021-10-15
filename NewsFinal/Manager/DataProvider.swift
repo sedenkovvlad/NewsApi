@@ -10,12 +10,12 @@ import UIKit
 
 final class DataProvider {
 
-    private let storageManager: StorageManager
+    private let storageManager: StorageManagerProtocol
     private let downloadManager: DownloadManager
     private let reachabilityManager: ReachabilityManager
     
     init(
-        storageManager: StorageManager,
+        storageManager: StorageManagerProtocol,
         downloadManager: DownloadManager,
         reachabilityManager: ReachabilityManager
     ) {

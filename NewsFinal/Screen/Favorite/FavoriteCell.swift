@@ -23,7 +23,7 @@ class FavoriteCell: UICollectionViewCell {
         label.adjustsFontSizeToFitWidth = true
         return label
     }()
-    
+
     lazy var sharedButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(systemName: "square.and.arrow.up"), for: .normal)
@@ -38,11 +38,13 @@ class FavoriteCell: UICollectionViewCell {
         return button
     }()
     
+    private lazy var firebaseManager = FirebaseManager()
     lazy var sharedButtonTapCallback: () -> ()  = { }
     lazy var deleteButtonTapCallback: () -> ()  = { }
     static let identifier = "cell"
     
-    
+
+  
     //MARK: - init
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -67,26 +69,26 @@ class FavoriteCell: UICollectionViewCell {
     
     
     //MARK: - Constraints
-    private func imageConstraints(){
+    private func imageConstraints() {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 20).isActive = true
         imageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20).isActive = true
         imageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20).isActive = true
         imageView.heightAnchor.constraint(equalToConstant: 100).isActive = true
     }
-    private func titleLabelConstraints(){
+    private func titleLabelConstraints() {
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 20).isActive = true
         titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20).isActive = true
         titleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20).isActive = true
         titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -60).isActive = true
     }
-    private func sharedButtonConstraints(){
+    private func sharedButtonConstraints() {
         sharedButton.translatesAutoresizingMaskIntoConstraints = false
         sharedButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -5).isActive = true
         sharedButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -5).isActive = true
     }
-    private func deleteButtonConstraits(){
+    private func deleteButtonConstraits() {
         deleteButton.translatesAutoresizingMaskIntoConstraints = false
         deleteButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -5).isActive = true
         deleteButton.trailingAnchor.constraint(equalTo: sharedButton.leadingAnchor, constant: -5).isActive = true
@@ -94,7 +96,7 @@ class FavoriteCell: UICollectionViewCell {
     
 
     //MARK: - Function
-    static func createLayout() -> UICollectionViewCompositionalLayout{
+    static func createLayout() -> UICollectionViewCompositionalLayout {
         //Item
         let item = NSCollectionLayoutItem(
             layoutSize: NSCollectionLayoutSize(
@@ -116,7 +118,7 @@ class FavoriteCell: UICollectionViewCell {
         return UICollectionViewCompositionalLayout(section: section)
     }
     
-    func configureCell(newsFirebase: NewsFirebase){
+    func configureCell(for newsFirebase: NewsFirebase, controller: UIViewController) {
         
         //title
         titleLabel.text = newsFirebase.title
@@ -126,14 +128,20 @@ class FavoriteCell: UICollectionViewCell {
             guard let imageData = data else {return}
             self?.imageView.image = UIImage(data: imageData)
         }
+        
+        sharedButtonTapCallback = {
+            let ac = UIActivityViewController(activityItems: [newsFirebase.url], applicationActivities: nil)
+            ac.isModalInPresentation = true
+            controller.present(ac, animated: true, completion: nil)
+        }
     }
     
     //MARK: - @objc
-    @objc private func sharedTapped(){
+    @objc private func sharedTapped() {
         sharedButtonTapCallback()
     }
     
-    @objc private func deleteTapped(){
+    @objc private func deleteTapped() {
         deleteButtonTapCallback()
     }
     
@@ -141,5 +149,4 @@ class FavoriteCell: UICollectionViewCell {
         super.prepareForReuse()
         imageView.image = nil
     }
-    
 }

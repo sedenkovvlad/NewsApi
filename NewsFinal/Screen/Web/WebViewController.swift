@@ -22,7 +22,6 @@ class WebViewController: UIViewController, WKNavigationDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         loadWeb()
         configureWebView()
         configureWebView()
@@ -30,7 +29,7 @@ class WebViewController: UIViewController, WKNavigationDelegate {
     
     //MARK: - private Function
     
-    private func configureProgressView(){
+    private func configureProgressView() {
         progressView = UIProgressView(progressViewStyle: .default)
         progressView.sizeToFit()
         let progressButton = UIBarButtonItem(customView: progressView)
@@ -40,12 +39,12 @@ class WebViewController: UIViewController, WKNavigationDelegate {
         navigationController?.isToolbarHidden = false
     }
     
-    private func configureWebView(){
+    private func configureWebView() {
         webView.navigationDelegate = self
         webView.addObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), options: .new, context: nil)
     }
     
-    private func loadWeb(){
+    private func loadWeb() {
         guard let url = URL else { return }
         DispatchQueue.main.async {
             self.webView.load(URLRequest(url: url))

@@ -30,7 +30,7 @@ class ReachabilityManager: ReachabilityManagerProtocol {
             return false
         }
         var flags : SCNetworkReachabilityFlags = []
-        if !SCNetworkReachabilityGetFlags(defaultRouteReachability, &flags) {return false}
+        if !SCNetworkReachabilityGetFlags(defaultRouteReachability, &flags) { return false }
         let isReachable = flags.contains(.reachable)
         let needsConnection = flags.contains(.connectionRequired)
         return (isReachable && !needsConnection)

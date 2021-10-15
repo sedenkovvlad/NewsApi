@@ -8,7 +8,7 @@
 import Foundation
 
 
-class NewsFirebase{
+class NewsFirebase {
     var title: String
     var url: String
     var newsURL: String

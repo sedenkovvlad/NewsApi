@@ -28,7 +28,7 @@ class ConverterDate {
         return dateFormatter.string(from: date)
     }
     
-    func formatDate(from date: String) -> Date?{
+    func formatDate(from date: String) -> Date? {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
         return formatter.date(from: date)

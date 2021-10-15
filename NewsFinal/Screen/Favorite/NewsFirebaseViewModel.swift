@@ -10,16 +10,16 @@ import UIKit
 import Firebase
 
 protocol NewsFirebaseViewModelProtocol{
-    var news: [NewsFirebase] {get}
+    var news: [NewsFirebase] {get set}
     func getNewsFirebase(collectionView: UICollectionView)
 }
 
 
-final class NewsFirebaseViewModel: NewsFirebaseViewModelProtocol{
+final class NewsFirebaseViewModel: NewsFirebaseViewModelProtocol {
     
-    private(set) var news: [NewsFirebase] = []
+    lazy var news: [NewsFirebase] = []
     
-    func getNewsFirebase(collectionView: UICollectionView){
+    func getNewsFirebase(collectionView: UICollectionView) {
         guard let userID = Auth.auth().currentUser?.uid else { return }
         let db = Firestore.firestore().collection("users").document(userID).collection("news")
         db.addSnapshotListener { [weak self] snapshot, error in
@@ -35,10 +35,9 @@ final class NewsFirebaseViewModel: NewsFirebaseViewModelProtocol{
                 let uuidString = data["uuidString"] as? String ?? "uuidString is missing"
                 return NewsFirebase(title: title, url: webUrl, newsURL: newsURL, uuidString: uuidString)
             }
-            DispatchQueue.main.async{
+            DispatchQueue.main.async {
                 collectionView.reloadData()
             }
         }
     }
-    
 }

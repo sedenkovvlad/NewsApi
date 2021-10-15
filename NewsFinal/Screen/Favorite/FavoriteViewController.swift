@@ -8,25 +8,17 @@
 import UIKit
 import Firebase
 
-protocol FavoriteViewControllerOutput: AnyObject {
-    func rowDeleted(with id: String)
-}
 
 class FavoriteViewController: UIViewController {
     
-    weak var output: FavoriteViewControllerOutput?
     
     private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: FavoriteCell.createLayout())
     private lazy var firebaseManager = FirebaseManager()
-    private let  viewModel: NewsFirebaseViewModelProtocol
+    private var viewModel: NewsFirebaseViewModelProtocol
   
-    
-    deinit {
-        print("Favotite deinit")
-    }
    
     //MARK: - init
-    init (viewModel: NewsFirebaseViewModel){
+    init (viewModel: NewsFirebaseViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -45,26 +37,19 @@ class FavoriteViewController: UIViewController {
 }
 
 //MARK: - CollectionView DataSource
-extension FavoriteViewController: UICollectionViewDataSource{
+extension FavoriteViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return viewModel.news.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
-        
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FavoriteCell.identifier, for: indexPath) as! FavoriteCell 
         let news = viewModel.news[indexPath.item]
-    
-        cell.configureCell(newsFirebase: news)
-        cell.sharedButtonTapCallback = { [weak self] in
-            let ac = UIActivityViewController(activityItems: [news.url], applicationActivities: nil)
-            ac.isModalInPresentation = true
-            self?.present(ac, animated: true)
-        }
+        cell.configureCell(for: news, controller: self)
         cell.deleteButtonTapCallback = { [weak self] in
             self?.firebaseManager.deleteFavoriteFireBase(news: news)
-            self?.output?.rowDeleted(with: news.uuidString)
+            self?.viewModel.news.remove(at: indexPath.item)
             DispatchQueue.main.async {
                 self?.collectionView.reloadData()
             }
@@ -75,7 +60,7 @@ extension FavoriteViewController: UICollectionViewDataSource{
 
 //MARK: UI
 extension FavoriteViewController {
-    func configureCollectionView(){
+    func configureCollectionView() {
         view.addSubview(collectionView)
         collectionView.register(FavoriteCell.self, forCellWithReuseIdentifier: FavoriteCell.identifier)
         collectionView.dataSource = self

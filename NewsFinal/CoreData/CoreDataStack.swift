@@ -12,7 +12,7 @@ protocol CoreDataStackProtocol {
     func saveData(news: [News])
     func fetchData() -> [News]
 }
-class CoreDataStack: CoreDataStackProtocol{
+class CoreDataStack: CoreDataStackProtocol {
     
     static let shared = CoreDataStack()
     private init() {}
@@ -53,7 +53,7 @@ class CoreDataStack: CoreDataStackProtocol{
                 let normalNews = News(title: newsEntity.title , url: newsEntity.url, urlToImage: newsEntity.urlToImage, publishedAt: newsEntity.publishedAt)
                 normalNewsArray.append(normalNews)
             }
-        } catch let error as NSError{
+        } catch let error as NSError {
             print("Could not fetch: - \(error), \(error.userInfo)")
         }
         return normalNewsArray
@@ -63,7 +63,7 @@ class CoreDataStack: CoreDataStackProtocol{
     //MARK: - Private Function
     private func converterData(news: [News]) {
         context.perform {
-            for oneNews in news{
+            for oneNews in news {
                 let newsEntity = NewsEntity(context: self.context)
                 newsEntity.title = oneNews.title
                 newsEntity.url = oneNews.url
@@ -71,7 +71,6 @@ class CoreDataStack: CoreDataStackProtocol{
                 newsEntity.publishedAt = oneNews.publishedAt
             }
             do{
-            
                 try self.context.save()
             }catch let error as NSError{
                 print("Failure to save context: \(error), \(error.userInfo)")

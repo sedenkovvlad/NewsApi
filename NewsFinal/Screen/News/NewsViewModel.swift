@@ -36,9 +36,6 @@ final class NewsViewModel: NewsViewModelProtocol {
     }
     
     
-    
-    
-    
     //MARK: - Converter Date
     func getDate(date: String?) -> String {
         guard let date = date else { return "" }
@@ -65,14 +62,12 @@ extension NewsViewModel {
         }
     }
     // Download Image from URL and Cache
-    func getImage(url: URL?, completion: @escaping (UIImage?) -> Void){
+    func getImage(url: URL?, completion: @escaping (UIImage?) -> Void) {
         guard let urlString = url else { return }
-        
-        if let cachedImage = imageCache.object(forKey: urlString.absoluteString as NSString){
+        if let cachedImage = imageCache.object(forKey: urlString.absoluteString as NSString) {
             completion(cachedImage)
             return
         }
-        
         let request = URLRequest(url: urlString, cachePolicy: .returnCacheDataElseLoad, timeoutInterval: 20)
         URLSession.shared.dataTask(with: request) { [weak self] data, _, error in
          
@@ -91,11 +86,11 @@ extension NewsViewModel {
 
 
 //MARK: - FireBase
-extension NewsViewModel{
-    func addFavorite(news: News, image: UIImageView?){
+extension NewsViewModel {
+    func addFavorite(news: News, image: UIImageView?) {
         firebaseManager.addFavorite(news: news,image: image)
     }
-    func deleteFavorite(news: News){
+    func deleteFavorite(news: News) {
         firebaseManager.deleteFavorite(news: news)
     }
 }

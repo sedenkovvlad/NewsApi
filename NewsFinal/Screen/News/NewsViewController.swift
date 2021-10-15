@@ -25,10 +25,7 @@ class NewsViewController: UIViewController {
     }
     
     
-    deinit {
-        print("News dinit")
-    }
-    
+   
     //MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,20 +39,22 @@ class NewsViewController: UIViewController {
 
 
 
+
+
 //MARK: - TableViewDataSource
-extension NewsViewController: UITableViewDataSource{
+extension NewsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.news.count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
          let cell = tableView.dequeueReusableCell(withIdentifier: NewsCell.identifier, for: indexPath) as!  NewsCell
         let news = viewModel.news[indexPath.row]
-        cell.configure(news: news, viewModel: viewModel)
+        cell.configure(for: news, viewModel: viewModel)
         return cell
     }
 }
 //MARK: TableViewDelegate
-extension NewsViewController: UITableViewDelegate{
+extension NewsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = WebViewController()
         let news = viewModel.news[indexPath.row]
@@ -67,16 +66,18 @@ extension NewsViewController: UITableViewDelegate{
 
 
 //MARK: - Networking
-extension NewsViewController{
-    private func getNewsData(category: Category){
+extension NewsViewController {
+    private func getNewsData(category: Category) {
         viewModel.getNewsData(category: category) { [weak self] result in
             switch result {
             case .success:
                 DispatchQueue.main.async {
                     self?.tableView.reloadData()
+                    self?.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
                     self?.viewModel.imageCache.removeAllObjects()
                 }
             case .failure:
+                self?.showNetworkError()
                 print(#function, "failure")
             }
         }
@@ -84,16 +85,12 @@ extension NewsViewController{
 }
 
 //MARK: - FireBase
-extension NewsViewController{
-    @objc private func signOut(){
-        do{
+extension NewsViewController {
+    @objc private func signOut() {
+        do {
             try Auth.auth().signOut()
             viewModel.imageCache.removeAllObjects()
-            let vc = AuthViewController()
-            guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-            appDelegate.window?.rootViewController = vc
-            present(vc, animated: true, completion: nil)
-        }catch let error as NSError{
+        } catch let error as NSError {
             print("Error signing out: \(error)")
         }
     }
@@ -101,8 +98,8 @@ extension NewsViewController{
 
 
 //MARK: - UI
-extension NewsViewController{
-    private func categoryMenu() -> UIMenu{
+extension NewsViewController {
+    private func categoryMenu() -> UIMenu {
         var categoryMenu: UIMenu {
             let menuAction = Category.allCases.map { [weak self] item -> UIAction in
                 let name = item.rawValue
@@ -115,7 +112,7 @@ extension NewsViewController{
         return categoryMenu
     }
     
-    private func exitButton() -> UIBarButtonItem{
+    private func exitButton() -> UIBarButtonItem {
         let button = UIButton()
         button.setTitle("\u{2347}", for: .normal)
         button.setTitleColor(.orange, for: .normal)
@@ -125,22 +122,21 @@ extension NewsViewController{
         return barItem
     }
     
-    private func configureTableView(){
+    private func configureTableView() {
         view.addSubview(tableView)
         tableView.register(NewsCell.self, forCellReuseIdentifier: NewsCell.identifier)
         tableView.frame = view.bounds
         tableView.delegate = self
         tableView.dataSource = self
     }
-}
-
-extension NewsViewController: FavoriteViewControllerOutput{
-    func rowDeleted(with id: String) {
-        guard let index = viewModel.news.firstIndex (where: { $0.ID == id }) else  {return}
-        viewModel.news[index].isFavorite = false
-        tableView.reloadData()
+    private func showNetworkError() {
+        let alert = UIAlertController(title: "Error", message: "There was an error accessing the News server. Please try again.", preferredStyle: .alert)
+        let action = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alert.addAction(action)
+        present(alert, animated: true, completion: nil)
     }
 }
+
 
 
 

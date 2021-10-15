@@ -20,8 +20,8 @@ class DownloadManager {
         
     init() {}
     
-    func fetchNews(for category: Category, competion: @escaping (Result<[News], DownloadError>) -> Void){
-        guard let url = URL(string: host + "&category=\(category.rawValue)") else {return}
+    func fetchNews(for category: Category, competion: @escaping (Result<[News], DownloadError>) -> Void) {
+        guard let url = URL(string: host + "&category=\(category.rawValue)") else { return }
         let session = URLSession.shared
         let dataTask = session.dataTask(with: url) { data, _ , error in
             DispatchQueue.main.async {
@@ -29,24 +29,24 @@ class DownloadManager {
                     competion(.failure(.errorNotNil))
                     return
                 }
-                
                 guard let data = data else {
                     print("Data isEmpty")
                     competion(.failure(.noData))
                     return
                 }
                 
-                do{
+                do {
                     let decoder = JSONDecoder()
                     let jsonData = try decoder.decode(Articles.self, from: data)
                     let news = jsonData.articles
                     competion(.success(news))
-                }catch let error as NSError{
+                } catch let error as NSError {
                     print("Could not fetch: \(error), \(error.userInfo)")
                 }
             }
         }
         dataTask.resume()
     }
+    
 }
 

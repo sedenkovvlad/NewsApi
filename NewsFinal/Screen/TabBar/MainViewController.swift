@@ -10,18 +10,16 @@ import UIKit
 class MainViewController: UITabBarController {
     
     
+    
     //MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTapBar()
     }
-    
-    deinit {
-        print("Main deinit")
-    }
+ 
     
     //MARK: - Configure Tabbar
-    private func setupTapBar(){
+    private func setupTapBar() {
         let newsVC = createNavController(vc: NewsViewController(viewModel: createNewsViewModel()), image: UIImage(systemName: "newspaper"))
         newsVC.tabBarItem.title = "News"
         newsVC.navigationBar.tintColor = .orange
@@ -32,25 +30,28 @@ class MainViewController: UITabBarController {
 }
 
 
-extension MainViewController{
-    private func createNavController(vc: UIViewController, image: UIImage?) -> UINavigationController{
+extension MainViewController {
+    private func createNavController(vc: UIViewController, image: UIImage?) -> UINavigationController {
         let navController = UINavigationController(rootViewController: vc)
         navController.tabBarItem.image = image
         return navController
     }
 }
 //MARK: - Create ViewModels
-extension MainViewController{
-    private func createNewsViewModel() -> NewsViewModel{
+extension MainViewController {
+    
+    private func createNewsViewModel() -> NewsViewModel {
         let dataProvider = DataProvider(
-            storageManager: StorageManagerImpl(),
+            storageManager: StorageManager(),
             downloadManager: DownloadManager(),
             reachabilityManager: ReachabilityManager()
         )
         let viewModel = NewsViewModel(dataProvider: dataProvider, converterDate: ConverterDate(), firebaseManager: FirebaseManager())
         return viewModel
     }
-    private func createFavoriteViewModel() -> NewsFirebaseViewModel{
+    
+    
+    private func createFavoriteViewModel() -> NewsFirebaseViewModel {
     let viewModel = NewsFirebaseViewModel()
         return viewModel
     }

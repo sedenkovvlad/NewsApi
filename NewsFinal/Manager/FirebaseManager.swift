@@ -9,12 +9,12 @@ import Foundation
 import UIKit
 import Firebase
 
-class FirebaseManager{
+class FirebaseManager {
    
    
     init() {}
   
-    func addFavorite(news: News, image: UIImageView?){
+    func addFavorite(news: News, image: UIImageView?) {
         guard let userID = Auth.auth().currentUser?.uid else { return }
         let db = Firestore.firestore().collection("users").document(userID).collection("news").document(news.ID)
         upload(news: news,currentUserID: userID, photo: image) { result in
@@ -33,7 +33,7 @@ class FirebaseManager{
         }
     }
     
-    func deleteFavorite(news: News){
+    func deleteFavorite(news: News) {
         guard let userID = Auth.auth().currentUser?.uid else { return }
         let db = Firestore.firestore().collection("users").document(userID).collection("news").document(news.ID)
         let storage = Storage.storage().reference().child("newsImage").child(news.ID)
@@ -53,27 +53,27 @@ class FirebaseManager{
         }
     }
     
-    func deleteFavoriteFireBase(news: NewsFirebase){
+    func deleteFavoriteFireBase(news: NewsFirebase) {
         guard let userID = Auth.auth().currentUser?.uid else { return }
         let db = Firestore.firestore().collection("users").document(userID).collection("news").document(news.uuidString)
         let storage = Storage.storage().reference().child("newsImage").child(news.uuidString)
-        db.delete() { error in
-            if let error = error {
-                print("Error removing document: \(error)")
-            }else{
-                print("Document successfully removed!")
-            }
-            storage.delete { error in
-                if let error = error{
-                    print("Error removing image: \(error)")
-                }else{
-                    print("Image successfully removed!")
+            db.delete() { error in
+                if let error = error {
+                    print("Error removing document: \(error)")
+                } else {
+                    print("Document successfully removed!")
                 }
+                storage.delete { error in
+                    if let error = error{
+                        print("Error removing image: \(error)")
+                    } else {
+                        print("Image successfully removed!")
+                    }
             }
         }
     }
     
-    private func upload(news: News,currentUserID: String, photo: UIImageView?, completion: @escaping (Result<URL, Error>) -> Void){
+    private func upload(news: News,currentUserID: String, photo: UIImageView?, completion: @escaping (Result<URL, Error>) -> Void) {
         
         let ref = Storage.storage().reference().child("newsImage").child(news.ID)
         guard let imageData = photo?.image?.jpegData(compressionQuality: 0.4) else { return }
@@ -82,12 +82,12 @@ class FirebaseManager{
         metadata.contentType = "image/jpeg"
         ref.putData(imageData, metadata: metadata) { _ , error in
             
-            if let error = error{
+            if let error = error {
                 completion(.failure(error))
             }
             ref.downloadURL { url , error in
                 
-                if let error = error{
+                if let error = error {
                     completion(.failure(error))
                 }
                 guard let url = url else { return }

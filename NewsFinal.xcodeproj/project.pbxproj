@@ -30,7 +30,7 @@
 		C2AAAE5C26D4F58300436850 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2AAAE5B26D4F58300436850 /* CoreDataStack.swift */; };
 		C2AAAE6326D4F6C900436850 /* DownloadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2AAAE6226D4F6C900436850 /* DownloadManager.swift */; };
 		C2AAAE6526D4F6F000436850 /* ReachabilityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2AAAE6426D4F6F000436850 /* ReachabilityManager.swift */; };
-		C2AAAE6826D4F73B00436850 /* StorageManagerImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2AAAE6726D4F73B00436850 /* StorageManagerImpl.swift */; };
+		C2AAAE6826D4F73B00436850 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2AAAE6726D4F73B00436850 /* StorageManager.swift */; };
 		C2AAAE6A26D4F7CE00436850 /* DataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2AAAE6926D4F7CE00436850 /* DataProvider.swift */; };
 		C2AAAE6D26D4F85700436850 /* ConverterDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2AAAE6C26D4F85700436850 /* ConverterDate.swift */; };
 		C2AAAE6F26D4F9AA00436850 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2AAAE6E26D4F9AA00436850 /* Category.swift */; };
@@ -66,7 +66,7 @@
 		C2AAAE5B26D4F58300436850 /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		C2AAAE6226D4F6C900436850 /* DownloadManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadManager.swift; sourceTree = "<group>"; };
 		C2AAAE6426D4F6F000436850 /* ReachabilityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReachabilityManager.swift; sourceTree = "<group>"; };
-		C2AAAE6726D4F73B00436850 /* StorageManagerImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManagerImpl.swift; sourceTree = "<group>"; };
+		C2AAAE6726D4F73B00436850 /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 		C2AAAE6926D4F7CE00436850 /* DataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataProvider.swift; sourceTree = "<group>"; };
 		C2AAAE6C26D4F85700436850 /* ConverterDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConverterDate.swift; sourceTree = "<group>"; };
 		C2AAAE6E26D4F9AA00436850 /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
@@ -248,7 +248,7 @@
 			children = (
 				C2AAAE6226D4F6C900436850 /* DownloadManager.swift */,
 				C2AAAE6426D4F6F000436850 /* ReachabilityManager.swift */,
-				C2AAAE6726D4F73B00436850 /* StorageManagerImpl.swift */,
+				C2AAAE6726D4F73B00436850 /* StorageManager.swift */,
 				C278647426F8AA49000782E8 /* FirebaseManager.swift */,
 				C2AAAE6926D4F7CE00436850 /* DataProvider.swift */,
 			);
@@ -385,7 +385,7 @@
 				C2AAAE4226D4F25700436850 /* NewsFinal.xcdatamodeld in Sources */,
 				C278647526F8AA49000782E8 /* FirebaseManager.swift in Sources */,
 				C217B26E26FF56BE006B4FF1 /* NewsFirebaseViewModel.swift in Sources */,
-				C2AAAE6826D4F73B00436850 /* StorageManagerImpl.swift in Sources */,
+				C2AAAE6826D4F73B00436850 /* StorageManager.swift in Sources */,
 				C217B26C26FE2E62006B4FF1 /* NewsFirebase.swift in Sources */,
 				C2AAAE6D26D4F85700436850 /* ConverterDate.swift in Sources */,
 				C2AAAE7726D500E000436850 /* NewsEntity+CoreDataProperties.swift in Sources */,
@@ -544,6 +544,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = KTCSM8JA85;
 				INFOPLIST_FILE = NewsFinal/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -564,6 +565,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = KTCSM8JA85;
 				INFOPLIST_FILE = NewsFinal/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
 				LD_RUNPATH_SEARCH_PATHS = (

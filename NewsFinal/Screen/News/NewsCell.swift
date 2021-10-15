@@ -58,15 +58,14 @@ class NewsCell: UITableViewCell {
     }
     
     //MARK: - ConfigureConstraints
-    private  func allConstraints(){
+    private  func allConstraints() {
         imageViewConstraints()
         titleLableConstraints()
         dateLabelConstraints()
         borderLineConstraints()
         favoriteButtonConstrains()
-        
     }
-    private func allAddSubview(){
+    private func allAddSubview() {
         addSubview(imageNews)
         addSubview(titleLabel)
         addSubview(dateLabel)
@@ -74,26 +73,26 @@ class NewsCell: UITableViewCell {
         addSubview(favoriteButton)
     }
     
-    private  func imageViewConstraints(){
+    private  func imageViewConstraints() {
         imageNews.translatesAutoresizingMaskIntoConstraints = false
         imageNews.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
         imageNews.trailingAnchor.constraint(equalTo: trailingAnchor,constant: -12).isActive = true
         imageNews.heightAnchor.constraint(equalToConstant: 120).isActive = true
         imageNews.widthAnchor.constraint(equalToConstant: 190).isActive = true
     }
-    private  func titleLableConstraints(){
+    private  func titleLableConstraints() {
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 10).isActive = true
         titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10).isActive = true
         titleLabel.trailingAnchor.constraint(equalTo: imageNews.leadingAnchor, constant: -20).isActive = true
         titleLabel.bottomAnchor.constraint(equalTo: borderLine.bottomAnchor, constant: -15).isActive = true
     }
-    private func dateLabelConstraints(){
+    private func dateLabelConstraints() {
         dateLabel.translatesAutoresizingMaskIntoConstraints = false
         dateLabel.bottomAnchor.constraint(equalTo: bottomAnchor,constant: -10).isActive = true
         dateLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10).isActive = true
     }
-    private func borderLineConstraints(){
+    private func borderLineConstraints() {
         borderLine.translatesAutoresizingMaskIntoConstraints = false
         borderLine.bottomAnchor.constraint(equalTo: dateLabel.bottomAnchor, constant: -30).isActive = true
         borderLine.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
@@ -101,7 +100,7 @@ class NewsCell: UITableViewCell {
         borderLine.heightAnchor.constraint(equalToConstant: 2).isActive = true
     }
     
-    private func favoriteButtonConstrains(){
+    private func favoriteButtonConstrains() {
         favoriteButton.translatesAutoresizingMaskIntoConstraints = false
         favoriteButton.topAnchor.constraint(equalTo: imageNews.bottomAnchor, constant: 5).isActive = true
         favoriteButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -5).isActive = true
@@ -110,7 +109,7 @@ class NewsCell: UITableViewCell {
     }
     
     //MARK: @objc
-    @objc private func didTapButton(){
+    @objc private func didTapButton() {
         buttonTapCallback()
     }
     
@@ -121,17 +120,17 @@ class NewsCell: UITableViewCell {
     }
     
     //MARK: - Configure Cell
-    func configure(news: News, viewModel: NewsViewModelProtocol){
+    func configure(for news: News, viewModel: NewsViewModelProtocol) {
         //title
         titleLabel.text = news.title
         //date
         dateLabel.text = viewModel.getDate(date: news.publishedAt)
         //image
-        if news.urlToImage != nil{
+        if news.urlToImage != nil {
             viewModel.getImage(url: news.urlToImage) { [weak self] image in
                 self?.imageNews.image = image
             }
-        }else{
+        } else {
             imageNews.image = UIImage(named: "noImage")
         }
         

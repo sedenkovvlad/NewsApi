@@ -9,7 +9,7 @@ import Foundation
 
 
 
-class News: Codable{
+class News: Codable {
     var title: String?
     var description: String?
     var url: URL?
@@ -34,9 +34,9 @@ class News: Codable{
 }
 
 
-class Articles: Codable{
+class Articles: Codable {
     var articles: [News]
-    private enum CodingKeys: String, CodingKey{
+    private enum CodingKeys: String, CodingKey {
         case articles = "articles"
     }
 }
