@@ -77,8 +77,10 @@ extension NewsViewModel {
                 let image = UIImage(data: data)
             else { return }
             DispatchQueue.main.async {
+                if urlString == url { 
             self?.imageCache.setObject(image, forKey: urlString.absoluteString as NSString)
                 completion(image)
+                }
             }
         }.resume()
     }

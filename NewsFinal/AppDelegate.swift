@@ -20,6 +20,7 @@ var window: UIWindow?
         Auth.auth().addStateDidChangeListener { [weak self] _, user in
             if user == nil {
                 let authNavController = UINavigationController(rootViewController: AuthViewController())
+                authNavController.navigationBar.tintColor = .orange
                 self?.rootController(controller: authNavController)
             } else {
                 let mainController = MainViewController()

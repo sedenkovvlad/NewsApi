@@ -52,6 +52,7 @@ class CoreDataStack: CoreDataStackProtocol {
             for newsEntity in fetchedNews {
                 let normalNews = News(title: newsEntity.title , url: newsEntity.url, urlToImage: newsEntity.urlToImage, publishedAt: newsEntity.publishedAt)
                 normalNewsArray.append(normalNews)
+            
             }
         } catch let error as NSError {
             print("Could not fetch: - \(error), \(error.userInfo)")

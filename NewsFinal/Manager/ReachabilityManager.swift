@@ -9,13 +9,8 @@ import Foundation
 import SystemConfiguration
 
 
-protocol ReachabilityManagerProtocol {
-    func isConnectedToNetwork() -> Bool
-}
-
-
 //MARK: - Internet Connection Manager
-class ReachabilityManager: ReachabilityManagerProtocol {
+class ReachabilityManager {
     
     init() { }
     

@@ -34,6 +34,7 @@ class NewsViewController: UIViewController {
         navigationItem.leftBarButtonItem = exitButton()
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: nil, image: UIImage(systemName: "scroll"), primaryAction: nil, menu: categoryMenu())
     }
+    
 }
 
 

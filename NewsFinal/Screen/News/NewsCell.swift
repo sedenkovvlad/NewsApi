@@ -43,6 +43,8 @@ class NewsCell: UITableViewCell {
         return button
     }()
     
+
+    
     lazy var buttonTapCallback: () -> ()  = { }
     static var identifier = "cell"
     
@@ -64,6 +66,7 @@ class NewsCell: UITableViewCell {
         dateLabelConstraints()
         borderLineConstraints()
         favoriteButtonConstrains()
+       
     }
     private func allAddSubview() {
         addSubview(imageNews)
@@ -71,6 +74,7 @@ class NewsCell: UITableViewCell {
         addSubview(dateLabel)
         addSubview(borderLine)
         addSubview(favoriteButton)
+       
     }
     
     private  func imageViewConstraints() {
@@ -107,6 +111,7 @@ class NewsCell: UITableViewCell {
         favoriteButton.centerXAnchor.constraint(equalTo: imageNews.centerXAnchor).isActive = true
         favoriteButton.addTarget(self, action: #selector(didTapButton), for: .touchUpInside)
     }
+  
     
     //MARK: @objc
     @objc private func didTapButton() {
