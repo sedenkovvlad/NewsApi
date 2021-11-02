@@ -50,7 +50,7 @@ class CoreDataStack: CoreDataStackProtocol {
         do {
             let fetchedNews = try context.fetch(fetchRequest)
             for newsEntity in fetchedNews {
-                let normalNews = News(title: newsEntity.title , url: newsEntity.url, urlToImage: newsEntity.urlToImage, publishedAt: newsEntity.publishedAt)
+                guard let normalNews = News(title: newsEntity.title , url: newsEntity.url, urlToImage: newsEntity.urlToImage, publishedAt: newsEntity.publishedAt) else { return [] }
                 normalNewsArray.append(normalNews)
             
             }

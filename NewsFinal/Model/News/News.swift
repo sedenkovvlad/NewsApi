@@ -18,7 +18,7 @@ class News: Codable {
     var isFavorite: Bool = false
     var ID = UUID().uuidString
     
-    init(title: String?, url: URL?, urlToImage: URL?, publishedAt: String?) {
+    init?(title: String?, url: URL?, urlToImage: URL?, publishedAt: String?) {
         self.title = title
         self.url = url
         self.urlToImage = urlToImage
@@ -40,3 +40,5 @@ class Articles: Codable {
         case articles = "articles"
     }
 }
+
+

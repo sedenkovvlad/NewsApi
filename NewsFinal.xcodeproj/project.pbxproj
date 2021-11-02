@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		911E8081D9CD636448006F0B /* Pods_NewsFinal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA3CBB2A6CD36443AFB6A63F /* Pods_NewsFinal.framework */; };
+		C20CE5F02731AAFC00A826D0 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20CE5EF2731AAFC00A826D0 /* NetworkService.swift */; };
+		C20CE5F22731AD6100A826D0 /* NetworkDataFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20CE5F12731AD6100A826D0 /* NetworkDataFetcher.swift */; };
 		C217B26326FB7F61006B4FF1 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C217B26226FB7F61006B4FF1 /* MainViewController.swift */; };
 		C217B26526FB8E6A006B4FF1 /* FavoriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C217B26426FB8E6A006B4FF1 /* FavoriteViewController.swift */; };
 		C217B26A26FE261C006B4FF1 /* FavoriteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C217B26926FE261C006B4FF1 /* FavoriteCell.swift */; };
@@ -43,6 +45,8 @@
 /* Begin PBXFileReference section */
 		45AE3169AA6517335A1EEDAE /* Pods-NewsFinal.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NewsFinal.release.xcconfig"; path = "Target Support Files/Pods-NewsFinal/Pods-NewsFinal.release.xcconfig"; sourceTree = "<group>"; };
 		BE00CB229CDE4E5C11B98B13 /* Pods-NewsFinal.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NewsFinal.debug.xcconfig"; path = "Target Support Files/Pods-NewsFinal/Pods-NewsFinal.debug.xcconfig"; sourceTree = "<group>"; };
+		C20CE5EF2731AAFC00A826D0 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
+		C20CE5F12731AD6100A826D0 /* NetworkDataFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkDataFetcher.swift; sourceTree = "<group>"; };
 		C217B26226FB7F61006B4FF1 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		C217B26426FB8E6A006B4FF1 /* FavoriteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteViewController.swift; sourceTree = "<group>"; };
 		C217B26926FE261C006B4FF1 /* FavoriteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteCell.swift; sourceTree = "<group>"; };
@@ -105,6 +109,15 @@
 				45AE3169AA6517335A1EEDAE /* Pods-NewsFinal.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		C20CE5EE2731AAC800A826D0 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				C20CE5EF2731AAFC00A826D0 /* NetworkService.swift */,
+				C20CE5F12731AD6100A826D0 /* NetworkDataFetcher.swift */,
+			);
+			path = Networking;
 			sourceTree = "<group>";
 		};
 		C217B26626FB8EB6006B4FF1 /* TabBar */ = {
@@ -206,6 +219,7 @@
 				C2AAAE5426D4F49600436850 /* Screen */,
 				C2AAAE5926D4F51A00436850 /* Model */,
 				C2AAAE6126D4F6B300436850 /* Manager */,
+				C20CE5EE2731AAC800A826D0 /* Networking */,
 				C2AAAE5A26D4F57800436850 /* CoreData */,
 				C2AAAE6B26D4F7F800436850 /* Helpers */,
 				C273303C26F7C9610079773A /* FireBase */,
@@ -381,12 +395,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C20CE5F22731AD6100A826D0 /* NetworkDataFetcher.swift in Sources */,
 				C2AAAE6526D4F6F000436850 /* ReachabilityManager.swift in Sources */,
 				C217B26326FB7F61006B4FF1 /* MainViewController.swift in Sources */,
 				C2AAAE7126D4FE3300436850 /* WebViewController.swift in Sources */,
 				C221480527301A2200F7A849 /* Extension + URL.swift in Sources */,
 				C2AAAE5826D4F4F400436850 /* News.swift in Sources */,
 				C2AAAE4226D4F25700436850 /* NewsFinal.xcdatamodeld in Sources */,
+				C20CE5F02731AAFC00A826D0 /* NetworkService.swift in Sources */,
 				C278647526F8AA49000782E8 /* FirebaseManager.swift in Sources */,
 				C217B26E26FF56BE006B4FF1 /* NewsFirebaseViewModel.swift in Sources */,
 				C2AAAE6826D4F73B00436850 /* StorageManager.swift in Sources */,

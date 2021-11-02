@@ -34,8 +34,8 @@ final class DataProvider {
         downloadManager.fetchNews(for: category) { [weak self] result in
             switch result {
             case .success(let fetchedNews):
-                completion(.success(fetchedNews))
-                self?.storageManager.saveNews(fetchedNews)
+                completion(.success(fetchedNews?.articles ?? []) )
+                self?.storageManager.saveNews(fetchedNews?.articles ?? [])
             case .failure(let err):
                 completion(.failure(err))
             }
