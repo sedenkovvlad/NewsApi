@@ -17,12 +17,12 @@ class NetworkService: Networking {
     
     func request(url: URL, completion: @escaping (Result<Data?, Error>) -> Void) {
         let request = URLRequest(url: url)
-        let tast = createDataTast(from: request, completion: completion)
+        let tast = createDataTask(from: request, completion: completion)
         tast.resume()
     }
     
-    private func createDataTast(from request: URLRequest, completion: @escaping (Result<Data?, Error>) -> Void) -> URLSessionDataTask {
-        return URLSession.shared.dataTask(with: request) { data, response, error in
+    private func createDataTask(from request: URLRequest, completion: @escaping (Result<Data?, Error>) -> Void) -> URLSessionDataTask {
+        return URLSession.shared.dataTask(with: request) { data, _ , error in
             if let error = error {
                 completion(.failure(error))
             }
