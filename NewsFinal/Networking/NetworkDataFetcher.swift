@@ -20,10 +20,10 @@ class NetworkDataFetcher: DataFetcher {
     }
     
     func fetchJSONData<T: Codable>(url: URL, response: @escaping (Result<T?, Error>) -> Void) {
-        networking.request(url: url) { result in
+        networking.request(url: url) { [weak self] result in
             switch result {
             case .success(let data):
-                let decoded = self.decodeJSON(type: T.self, from: data)
+                let decoded = self?.decodeJSON(type: T.self, from: data)
                 response(.success(decoded))
             case .failure(let error):
                 response(.failure(error))
