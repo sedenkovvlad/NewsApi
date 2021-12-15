@@ -17,8 +17,8 @@ class NetworkService: Networking {
     
     func request(url: URL, completion: @escaping (Result<Data?, Error>) -> Void) {
         let request = URLRequest(url: url)
-        let tast = createDataTask(from: request, completion: completion)
-        tast.resume()
+        let task = createDataTask(from: request, completion: completion)
+        task.resume()
     }
     
     private func createDataTask(from request: URLRequest, completion: @escaping (Result<Data?, Error>) -> Void) -> URLSessionDataTask {
